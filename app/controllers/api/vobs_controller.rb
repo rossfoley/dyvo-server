@@ -1,12 +1,56 @@
 class Api::VobsController < Api::BaseController
+  before_filter :load_vob
+
   def index
-    success Vob.all.map &:as_json
+    success Vob.all.to_a
+  end
+
+  def show
+    success @vob
+  end
+
+  def destroy
+    if @vob.destroy
+      success
+    end
+  end
+
+  def create
+    @vob = current_user.vobs.create(vob_data)
+    success @vob
+  end
+
+  def update
+    if @vob.update_attributes vob_data
+      success @vob
+    end
   end
 
   def within
     distance_degrees = params[:distance].to_f / 69.0
     location = [params[:longitude].to_f, params[:latitude].to_f]
     query = Vob.near(location: location).max_distance(location: distance_degrees)
-    success query.map &:as_json
+    success query.to_a
+  end
+
+  private
+
+  def load_vob
+    if params[:id]
+      @vob = Vob.find(params[:id])
+      unless @vob
+        failure :not_found, 'VOB with specified ID does not exist'
+      end
+    end
+  end
+
+  def vob_data
+    if params[:vob_data]
+      if params[:vob_data].is_a? String
+        JSON.parse params[:vob_data]
+      else
+        params.require(:vob_data).permit!
+      end
+    end
   end
 end

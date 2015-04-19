@@ -9,8 +9,13 @@ class Api::UsersController < ApplicationController
     success @user.filtered_friends
   end
 
+  def refreshed_friends
+    FacebookService.refresh_friends @user
+    success @user.filtered_friends
+  end
+
   def vobs
-    success @user.vobs.map &:as_json
+    success @user.vobs.to_a
   end
 
   private

@@ -3,18 +3,22 @@ Rails.application.routes.draw do
   devise_for :users
   
   namespace :api do
-    post 'facebook/login' => 'facebook#login'
-    get 'facebook/callback' => 'facebook#verify_callback'
-    post 'facebook/callback' => 'facebook#handle_callback'
+    scope 'facebook' do
+      post 'login' => 'facebook#login'
+      get 'callback' => 'facebook#verify_callback'
+      post 'callback' => 'facebook#handle_callback'
+    end
 
     scope 'users/(:id)', constraints: {id: /\d+/} do
       get 'friends' => 'users#friends'
+      get 'refresh_friends' => 'users#refresh_friends'
       get 'vobs' => 'users#vobs'
     end
 
-    scope 'vobs' do
-      get '/' => 'vobs#index'
-      get 'within' => 'vobs#within'
+    resources :vobs, except: [:new, :edit] do
+      collection do
+        get 'within'
+      end
     end
   end
 end
