@@ -47,10 +47,14 @@ class Api::VobsController < Api::BaseController
   def vob_data
     if params[:vob_data]
       if params[:vob_data].is_a? String
-        JSON.parse params[:vob_data]
+        vob_data = JSON.parse params[:vob_data]
       else
-        params.require(:vob_data).permit!
+        vob_data = params.require(:vob_data).permit!
       end
+      longitude = vob_data.delete 'longitude'
+      latitude = vob_data.delete 'latitude'
+      vob_data['location'] = [longitude.to_f, latitude.to_f]
+      vob_data
     end
   end
 end
