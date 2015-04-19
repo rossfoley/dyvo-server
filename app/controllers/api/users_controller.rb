@@ -1,4 +1,4 @@
-class Api::UsersController < ApplicationController
+class Api::UsersController < Api::BaseController
   before_filter :load_user
 
   def show
