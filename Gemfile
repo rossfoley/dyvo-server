@@ -8,6 +8,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Mongoid database
 gem 'mongoid'
 gem 'mongoid_search'
+gem 'mongoid-geospatial'
 
 # Server
 gem 'bson_ext'

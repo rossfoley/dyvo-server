@@ -9,6 +9,10 @@ class Api::UsersController < ApplicationController
     success @user.filtered_friends
   end
 
+  def vobs
+    success @user.vobs.map &:as_json
+  end
+
   private
 
   def load_user

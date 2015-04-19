@@ -8,7 +8,13 @@ Rails.application.routes.draw do
     post 'facebook/callback' => 'facebook#handle_callback'
 
     scope 'users/(:id)', constraints: {id: /\d+/} do
-      get 'friends' => 'users#friends', constraints: {id: /\d+/}
+      get 'friends' => 'users#friends'
+      get 'vobs' => 'users#vobs'
+    end
+
+    scope 'vobs' do
+      get '/' => 'vobs#index'
+      get 'within' => 'vobs#within'
     end
   end
 end

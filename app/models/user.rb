@@ -38,6 +38,9 @@ class User
   field :friend_ids, type: Array, default: []
   field :access_token, type: String, default: ''
 
+  # VOBs
+  has_many :vobs
+
   ##################
   # Facebook Login #
   ##################
