@@ -1,6 +1,7 @@
 class Vob
   include Mongoid::Document
   include Mongoid::Geospatial
+  include Mongoid::Timestamps
   
   belongs_to :user
 
