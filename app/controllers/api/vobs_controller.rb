@@ -27,10 +27,7 @@ class Api::VobsController < Api::BaseController
   end
 
   def within
-    distance_degrees = params[:distance].to_f / 69.0
-    location = [params[:longitude].to_f, params[:latitude].to_f]
-    query = Vob.near(location: location).max_distance(location: distance_degrees)
-    success query.to_a
+    success Vob.nearby(params[:distance], params[:longitude], params[:latitude])
   end
 
   private
