@@ -15,7 +15,7 @@ class Vob
     nearby_vob_ids = query.map {|v| v.id.to_s }
     all.to_a.map do |vob|
       vob_json = vob.as_json
-      vob_json[:nearby] = nearby_vob_ids.include?(vob.id.to_s) ? 1 : 0
+      vob_json['nearby'] = nearby_vob_ids.include?(vob.id.to_s) ? 1 : 0
       vob_json
     end
   end
